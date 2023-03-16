@@ -1,3 +1,3 @@
-module chat
+module roulette
 
-go 1.19
+go 1.15
