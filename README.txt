@@ -1,6 +1,6 @@
 Server hosted turn based game of pseudo russian roulette. Room of two players taking turns and risking. Risking chance increases while players continue to risk and will reset only if both players yield their chance. For each survived shot player gets 100*(6-n) points of score where the n represents roulette (starting 1/6 and slowly increasing up to 6/6). Game ends with one player reaching 1000 points or one player losing the dice.
 Simple GUI is made in python, game is however playable via shell like telnet or netstat (which was main purpouse).
-Server is written in GO, clients is python-made GUI.
+Server is written in GO, client is python-made GUI.
 
 Client:
 --dependancies: tkinter, sys, time
