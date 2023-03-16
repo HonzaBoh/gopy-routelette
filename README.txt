@@ -1,15 +1,22 @@
+Server hosted turn based game of pseudo russian roulette. Room of two players taking turns and risking. Risking chance increases while players continue to risk and will reset only if both players yield their chance. For each survived shot player gets 100*(6-n) points of score where the n represents roulette (starting 1/6 and slowly increasing up to 6/6). Game ends with one player reaching 1000 points or one player losing the dice.
+Simple GUI is made in python, game is however playable via shell like telnet or netstat (which was main purpouse).
+Server is written in GO, clients is python-made GUI.
+
 Client:
---dependancies: tkinter, sys, time..
---build: pyinstaller
+--dependancies: tkinter, sys, time
+--build: runnable via .py file, pyinstaller
 --default: exe file, network.config file
 network.config as DST_IP, DST_PORT
 --run via python client.py DST_IP DST_PORT
-    --accepts hostnames and in case of invalid arguments usees network.config
+    --accepts hostnames and in case of invalid arguments uses network.config
 Server:
 --build: go build
 --default: exe file, network.config file
 --run: exe file, optional flag: -port=n
-
+    --if port is invalid or not entered, config will be read from network.config file, message of config is displayed
+    
+    
+Following is the protocol of communication, using the protocol alone one can play the game simply on client base.
 Protocol:
 general format: /[commad]|[possible_param(s)]
 
@@ -26,7 +33,7 @@ S:/roomlist[roomNames]|....| - answer for '/rooms' command
 
 C:/msg|[text] - relict from chat server, could be used to implement further functionality, broadcast of [text] in the room
 
-C:/quit - closes connection with the client and server, GUI clientwise its bound to exit button
+C:/quit - closes connection with the client and server, GUI: clientwise its bound to exit button
 
 S:/game-ready - initiating command 3 seconds prior game start
 C:/playermove|[yield/risk] - game move of roulette
@@ -75,4 +82,4 @@ States:
 4.1->4.2 scenario: one player won the game (also can occur after other player left without reconnecting) -> connected player won
 1->4 scenario: reconnecting of player into the running instance of a game
 
-1,2,3,4-> -1 scenario: client uses /quit command and terminates the connection (or the connection is terminated via other means)
+1,2,3,4->1 scenario: client uses /quit command and terminates the connection (or the connection is terminated via other means)
